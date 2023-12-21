@@ -1,0 +1,45 @@
+pipeline {
+  agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  stages {
+                stage('Git-Checkout') {
+                        steps {
+                                echo "Checking out the project from Git Repo";
+                                git 'https://github.com/georgeju2/demo_2.git'
+                        }
+                }
+				
+                stage('Build') {
+                        steps {
+                                echo "Building the checked-out project!";
+                                bat 'mvnw.cmd package install'
+                        }
+                }
+				
+                stage('Unit-Test') {
+                        steps {
+                                echo "JUnit Passed Successfully!!!";
+                                bat 'Unit.bat'
+                        }
+                }
+				
+				stage('Deploy') {
+                        steps {
+                                echo "Deploy Passed Successfully!!!";
+                                bat 'mvnw.cmd deploy'
+                        }
+                }
+
+    stage('Quality-Gate') {
+      steps {
+        withSonarQubeEnv(installationName: 'sq1') { 
+		  bat 'mvnw.cmd verify sonar:sonar'
+        }
+      }
+    }
+
+
+  }
+}
