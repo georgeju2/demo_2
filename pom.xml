@@ -44,6 +44,24 @@
           </archive>
         </configuration>
       </plugin>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                    <phase>package</phase> <!--  bind to the packaging phase -->
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>	  
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -69,4 +87,17 @@
       </plugin>
     </plugins>
   </build>
+  
+<distributionManagement>
+           <snapshotRepository>
+                <id>github</id>
+                <name>georgeju2</name>
+                <url>https://maven.pkg.github.com/georgeju2/repo</url>
+            </snapshotRepository>
+            <repository>
+                <id></id>
+                <name></name>
+                <url></url>
+            </repository>
+</distributionManagement>  
 </project>

@@ -69,12 +69,14 @@ case "$(uname)" in
     ;;
 esac
 
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
 if [ -z "$JAVA_HOME" ] ; then
   if [ -r /etc/gentoo-release ] ; then
     JAVA_HOME=$(java-config --jre-home)
   fi
 fi
-
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
+ 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin ; then
   [ -n "$JAVA_HOME" ] &&
@@ -82,12 +84,14 @@ if $cygwin ; then
   [ -n "$CLASSPATH" ] &&
     CLASSPATH=$(cygpath --path --unix "$CLASSPATH")
 fi
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
 
 # For Mingw, ensure paths are in UNIX format before anything is touched
 if $mingw ; then
   [ -n "$JAVA_HOME" ] && [ -d "$JAVA_HOME" ] &&
     JAVA_HOME="$(cd "$JAVA_HOME" || (echo "cannot cd into $JAVA_HOME."; exit 1); pwd)"
 fi
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
 
 if [ -z "$JAVA_HOME" ]; then
   javaExecutable="$(which javac)"
@@ -108,6 +112,7 @@ if [ -z "$JAVA_HOME" ]; then
     fi
   fi
 fi
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
 
 if [ -z "$JAVACMD" ] ; then
   if [ -n "$JAVA_HOME"  ] ; then
@@ -291,6 +296,7 @@ if $cygwin; then
   [ -n "$MAVEN_PROJECTBASEDIR" ] &&
     MAVEN_PROJECTBASEDIR=$(cygpath --path --windows "$MAVEN_PROJECTBASEDIR")
 fi
+echo ">>>>> JAVA_HOME= ${JAVA_HOME}"
 
 # Provide a "standardized" way to retrieve the CLI args that will
 # work with both Windows and non-Windows executions.
@@ -300,6 +306,9 @@ export MAVEN_CMD_LINE_ARGS
 WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
 # shellcheck disable=SC2086 # safe args
+echo $JAVACMD
+echo $MAVEN_OPTS
+echo $MAVEN_DEBUG_OPTS
 exec "$JAVACMD" \
   $MAVEN_OPTS \
   $MAVEN_DEBUG_OPTS \
